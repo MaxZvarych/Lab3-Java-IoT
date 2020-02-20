@@ -26,19 +26,16 @@ class SecuritiesManagerTest extends BaseSecuritiesManager {
 
 	@Test
 	public void testSearchByPrice() {
-		securitiesManager.searchByPrice(30);
 	assertEquals(30,securitiesManager.searchByPrice(30).getPrice());
 	}
 
 	@Test
 	public void testSearchByLevelOfRisk() {
-		securitiesManager.searchByLevelOfRisk(RiskLevel.LOW);
 		assertEquals(RiskLevel.LOW,securitiesManager.searchByLevelOfRisk(RiskLevel.LOW).getLevelOfRisk());
 	}
 
 	@Test
 	public void testSearchByTrendOfBidding() {
-		securitiesManager.searchByTrendOfBidding(BiddingTrend.ASCENDING);
 		assertEquals(BiddingTrend.ASCENDING,securitiesManager.searchByTrendOfBidding(BiddingTrend.ASCENDING).getTrendOfBidding());
 	}
 

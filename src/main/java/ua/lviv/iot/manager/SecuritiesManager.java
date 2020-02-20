@@ -9,21 +9,25 @@ import ua.lviv.iot.model.Securities;
 
 public class SecuritiesManager {
 
-	private ArrayList<Securities> listOfSecurities = new ArrayList<Securities>();
+	private List<Securities> listOfSecurities = new ArrayList<>();
 	{
-		this.listOfSecurities.set(0, new Securities(40, RiskLevel.HIGH, BiddingTrend.ASCENDING));
-		this.listOfSecurities.set(1, new Securities(30, RiskLevel.MEDIUM, BiddingTrend.ASCENDING));
-		this.listOfSecurities.set(2, new Securities(20, RiskLevel.LOW, BiddingTrend.ASCENDING));
+		listOfSecurities.clear();
+		this.listOfSecurities.add(0, new Securities(40, RiskLevel.HIGH, BiddingTrend.ASCENDING));
+		this.listOfSecurities.add(1, new Securities(30, RiskLevel.MEDIUM, BiddingTrend.ASCENDING));
+		this.listOfSecurities.add(2, new Securities(20, RiskLevel.LOW, BiddingTrend.ASCENDING));
 	}
 
 	public void addSecurities(List<Securities> securities) {
-		if (listOfSecurities == null) {
+		if (securities==null || securities.isEmpty()) {
 			listOfSecurities.set(0, new Securities(40, RiskLevel.HIGH, BiddingTrend.ASCENDING));
 			listOfSecurities.set(1, new Securities(30, RiskLevel.MEDIUM, BiddingTrend.ASCENDING));
 			listOfSecurities.set(2, new Securities(20, RiskLevel.LOW, BiddingTrend.ASCENDING));
 		} else
+		{
+			listOfSecurities.clear();
 			listOfSecurities.addAll(securities);
-	}
+		}
+		}
 
 	public void addSecurity(Securities security) {
 		listOfSecurities.add(security);
