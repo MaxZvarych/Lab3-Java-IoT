@@ -2,7 +2,7 @@ package ua.lviv.iot.model;
 
 import ua.lviv.iot.manager.SecuritiesManager;
 
-public class Securities extends SecuritiesManager {
+public class Securities {
  protected int price;
  protected String documentOwner;
  protected RiskLevel levelOfRisk;
@@ -32,7 +32,6 @@ public void setTrendOfBidding(BiddingTrend trendOfBidding) {
 }
 protected BiddingTrend trendOfBidding;
 public Securities(int price, String documentOwner, RiskLevel levelOfRisk, BiddingTrend trendOfBidding) {
-	super();
 	this.price = price;
 	this.documentOwner = documentOwner;
 	this.levelOfRisk = levelOfRisk;
