@@ -1,4 +1,5 @@
 package ua.lviv.iot.manager;
+
 import java.util.ArrayList;
 import java.util.List;
 import ua.lviv.iot.model.BiddingTrend;

@@ -16,27 +16,28 @@ class SecuritiesManagerTest extends BaseSecuritiesManager {
 	@BeforeEach
 	public void setUp() {
 		// FIXME:Manager initialization logic goes here
-		//create required objects here
-		
+		// create required objects here
+
 		securitiesManager = new SecuritiesManager();
 		createSecurities();
 		securitiesManager.addSecurities(securities);
-		
+
 	}
 
 	@Test
 	public void testSearchByPrice() {
-	assertEquals(30,securitiesManager.searchByPrice(30).getPrice());
+		assertEquals(30, securitiesManager.searchByPrice(30).getPrice());
 	}
 
 	@Test
 	public void testSearchByLevelOfRisk() {
-		assertEquals(RiskLevel.LOW,securitiesManager.searchByLevelOfRisk(RiskLevel.LOW).getLevelOfRisk());
+		assertEquals(RiskLevel.LOW, securitiesManager.searchByLevelOfRisk(RiskLevel.LOW).getLevelOfRisk());
 	}
 
 	@Test
 	public void testSearchByTrendOfBidding() {
-		assertEquals(BiddingTrend.ASCENDING,securitiesManager.searchByTrendOfBidding(BiddingTrend.ASCENDING).getTrendOfBidding());
+		assertEquals(BiddingTrend.ASCENDING,
+				securitiesManager.searchByTrendOfBidding(BiddingTrend.ASCENDING).getTrendOfBidding());
 	}
 
 }
