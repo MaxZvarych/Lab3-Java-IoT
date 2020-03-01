@@ -1,6 +1,5 @@
 package ua.lviv.iot.model;
 
-
 public class Securities {
 	protected int price;
 	protected String documentOwner;
@@ -37,6 +36,14 @@ public class Securities {
 
 	public void setTrendOfBidding(BiddingTrend trendOfBidding) {
 		this.trendOfBidding = trendOfBidding;
+	}
+
+	public String getHeaders() {
+		return "price" + "," + "documentOwner" + "," + "levelOfRisk" + "," + "trendOfBidding";
+	}
+
+	public String toCSV() {
+		return getPrice() + "," + getDocumentOwner() + "," + getLevelOfRisk() + "," + getTrendOfBidding();
 	}
 
 	public Securities(int price, String documentOwner, RiskLevel levelOfRisk, BiddingTrend trendOfBidding) {
