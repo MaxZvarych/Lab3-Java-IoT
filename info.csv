@@ -1,3 +1,4 @@
-price,documentOwner,levelOfRisk,trendOfBidding,40,null,HIGH,ASCENDING
-price,documentOwner,levelOfRisk,trendOfBidding,30,null,MEDIUM,ASCENDING
-price,documentOwner,levelOfRisk,trendOfBidding,20,null,LOW,ASCENDING
+price,documentOwner,levelOfRisk,trendOfBidding
+40,null,HIGH,ASCENDING
+30,null,MEDIUM,ASCENDING
+20,null,LOW,ASCENDING
