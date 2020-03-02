@@ -19,8 +19,10 @@ public class SecuritiesWriter {
 	}
 
 	public void writeToFile(List<Securities> listOfSecurities) throws IOException {
+		csvWriter.write(listOfSecurities.get(0).getHeaders());
+		csvWriter.write("\n");
 		for (Securities securities : listOfSecurities) {
-			csvWriter.write(securities.getHeaders() + "," + securities.toCSV());
+			csvWriter.write(securities.toCSV());
 			csvWriter.write("\n");
 		}
 		csvWriter.flush();

@@ -27,8 +27,11 @@ class SecuritiesWriterTest extends BaseSecuritiesManager {
 		StringBuilder expected = new StringBuilder();
 		securitiesWriter.setCsvWriter(new StringWriter());
 		securitiesWriter.writeToFile(securities);
+		expected.append(securities.get(0).getHeaders());
+		expected.append("\n");
 		for (Securities listOfSecurities : securities) {
-			expected.append(listOfSecurities.getHeaders()).append(",").append(listOfSecurities.toCSV()).append("\n");
+			expected.append(listOfSecurities.toCSV());
+			expected.append("\n");
 		}
 		assertEquals(expected.toString(), securitiesWriter.toString());
 
