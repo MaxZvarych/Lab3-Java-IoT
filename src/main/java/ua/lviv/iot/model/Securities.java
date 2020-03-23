@@ -5,6 +5,15 @@ public class Securities {
 	protected String documentOwner;
 	protected RiskLevel levelOfRisk;
 	protected BiddingTrend trendOfBidding;
+	protected Integer id;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public int getPrice() {
 		return price;
