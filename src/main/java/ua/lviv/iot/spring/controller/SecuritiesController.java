@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +19,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ua.lviv.iot.model.Securities;
+import ua.lviv.iot.spring.business.SecuritiesService;
+import ua.lviv.iot.spring.model.Securities;
 
 @RequestMapping("/securities")
 @RestController
 public class SecuritiesController {
-	private Map<Integer, Securities> securities = new HashMap();
+	private Map<Integer, Securities> securities = new HashMap<>();
 	private AtomicInteger idCounter = new AtomicInteger();
+	@Autowired
+	private SecuritiesService securitiesService;
 
 	@GetMapping
 	public List<Securities> getStudents() {
@@ -39,7 +43,8 @@ public class SecuritiesController {
 
 	@PostMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
 	public Securities createStudent(final @RequestBody Securities security) {
-		System.out.println(security);
+		// System.out.println(security);
+		System.out.println(securitiesService.createSecurities(security));
 		security.setId(idCounter.incrementAndGet());
 		securities.put(security.getId(), security);
 
@@ -53,18 +58,16 @@ public class SecuritiesController {
 	}
 
 	@PutMapping(path = "/{id}")
-	public ResponseEntity<Securities> updateStudent(final @PathVariable("id") Integer studentId,
+	public ResponseEntity<Object> updateStudent(final @PathVariable("id") Integer studentId,
 			final @RequestBody Securities student) {
 		student.setId(studentId);
-		HttpStatus status;
+		Securities result = null;
 		if (securities.containsKey(studentId)) {
-			securities.put(studentId, student);
-			status = HttpStatus.OK;
-			return ResponseEntity.status(status).build();
-		} else {
-			status = HttpStatus.NOT_FOUND;
-			return ResponseEntity.status(status).build();
+			result = securities.put(studentId, student);
 		}
-
+		ResponseEntity<Object> status = result == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+				: new ResponseEntity<>(result, HttpStatus.OK);
+		securities.put(studentId, student);
+		return status;
 	}
 }

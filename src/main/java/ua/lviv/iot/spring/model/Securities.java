@@ -1,9 +1,12 @@
-package ua.lviv.iot.model;
+package ua.lviv.iot.spring.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import ua.lviv.iot.model.BiddingTrend;
+import ua.lviv.iot.model.RiskLevel;
 
 @Entity
 public class Securities {
