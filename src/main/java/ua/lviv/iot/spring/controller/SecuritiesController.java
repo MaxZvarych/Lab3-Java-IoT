@@ -32,42 +32,42 @@ public class SecuritiesController {
 
 	@GetMapping
 	public List<Securities> getStudents() {
-		return new LinkedList<Securities>(securities.values());
+		return new LinkedList<Securities>(securitiesService.findAll());
 	}
 
 	@GetMapping(path = "/{id}")
-	public Securities getStudent(@PathVariable("id") Integer studentId) {
-		System.out.println(studentId);
-		return securities.get(studentId);
+	public Securities getStudent(@PathVariable("id") Integer securityId) {
+		System.out.println(securityId);
+		return securitiesService.findSecurity(securityId);
 	}
 
 	@PostMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
 	public Securities createStudent(final @RequestBody Securities security) {
-		// System.out.println(security);
-		System.out.println(securitiesService.createSecurities(security));
 		security.setId(idCounter.incrementAndGet());
-		securities.put(security.getId(), security);
-
-		return security;
+		return securitiesService.createSecurities(security);
 	}
 
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<Securities> deleteStudent(@PathVariable("id") Integer studentId) {
-		HttpStatus status = securities.remove(studentId) == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
-		return ResponseEntity.status(status).build();
+	public ResponseEntity<Securities> deleteStudent(@PathVariable("id") Integer securitytId) {
+		if (securitiesService.checkIfSecurityExist(securitytId)) {
+			securitiesService.deleteSecurity(securitytId);
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.notFound().build();
 	}
 
 	@PutMapping(path = "/{id}")
-	public ResponseEntity<Object> updateStudent(final @PathVariable("id") Integer studentId,
-			final @RequestBody Securities student) {
-		student.setId(studentId);
+	public ResponseEntity<Object> updateStudent(final @PathVariable("id") Integer securityId,
+			final @RequestBody Securities security) {
+		security.setId(securityId);
 		Securities result = null;
-		if (securities.containsKey(studentId)) {
-			result = securities.put(studentId, student);
+		if (securitiesService.checkIfSecurityExist(securityId)) {
+			result = securitiesService.updateSecurity(securityId, security);
 		}
 		ResponseEntity<Object> status = result == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
 				: new ResponseEntity<>(result, HttpStatus.OK);
-		securities.put(studentId, student);
+		securitiesService.updateSecurity(securityId, security);
+
 		return status;
 	}
 }
