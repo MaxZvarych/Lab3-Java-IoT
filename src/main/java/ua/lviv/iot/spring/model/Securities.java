@@ -1,19 +1,45 @@
-package ua.lviv.iot.model;
+package ua.lviv.iot.spring.model;
+
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import ua.lviv.iot.model.BiddingTrend;
+import ua.lviv.iot.model.RiskLevel;
 
 @Entity
 public class Securities {
 	protected int price;
-	protected String documentOwner;
 	protected RiskLevel levelOfRisk;
 	protected BiddingTrend trendOfBidding;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "documentOwner_id")
+	@JsonIgnoreProperties("securities")
+	private DocumentOwner documentOwner;
+	
+	@ManyToMany(mappedBy = "securities")
+	@JsonIgnoreProperties("securities")
+	private Set<Lawyer> lawyers;
+
+	public Set<Lawyer> getLawyers() {
+		return lawyers;
+	}
+
+	public void setLawyers(Set<Lawyer> lawyers) {
+		this.lawyers = lawyers;
+	}
 
 	public Integer getId() {
 		return id;
@@ -31,11 +57,11 @@ public class Securities {
 		this.price = price;
 	}
 
-	public String getDocumentOwner() {
+	public DocumentOwner getDocumentOwner() {
 		return documentOwner;
 	}
 
-	public void setDocumentOwner(String documentOwner) {
+	public void setDocumentOwner(DocumentOwner documentOwner) {
 		this.documentOwner = documentOwner;
 	}
 
@@ -63,7 +89,7 @@ public class Securities {
 		return getPrice() + "," + getDocumentOwner() + "," + getLevelOfRisk() + "," + getTrendOfBidding();
 	}
 
-	public Securities(int price, String documentOwner, RiskLevel levelOfRisk, BiddingTrend trendOfBidding) {
+	public Securities(int price, DocumentOwner documentOwner, RiskLevel levelOfRisk, BiddingTrend trendOfBidding) {
 		this.price = price;
 		this.documentOwner = documentOwner;
 		this.levelOfRisk = levelOfRisk;
