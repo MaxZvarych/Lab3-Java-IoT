@@ -2,7 +2,6 @@ package ua.lviv.iot.spring.controller;
 
 import java.util.LinkedList;
 import java.util.List;
-
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,53 +17,54 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ua.lviv.iot.spring.business.SecuritiesService;
-import ua.lviv.iot.spring.model.Securities;
+import ua.lviv.iot.spring.business.LawyerService;
 
-@RequestMapping("/securities")
+import ua.lviv.iot.spring.model.Lawyer;
+
+@RequestMapping("/lawyer")
 @RestController
-public class SecuritiesController {
+public class LawyerController {
 	private AtomicInteger idCounter = new AtomicInteger();
 	@Autowired
-	private SecuritiesService securitiesService;
+	private LawyerService LawyerService;
 
 	@GetMapping
-	public List<Securities> getSecurities() {
-		return new LinkedList<Securities>(securitiesService.findAll());
+	public List<Lawyer> getLawyer() {
+		return new LinkedList<Lawyer>(LawyerService.findAll());
 	}
 
 	@GetMapping(path = "/{id}")
-	public Securities getSecurity(@PathVariable("id") Integer securityId) {
-		System.out.println(securityId);
-		return securitiesService.findSecurity(securityId);
+	public Lawyer getLawyer(@PathVariable("id") Integer LawyerId) {
+		System.out.println(LawyerId);
+		return LawyerService.findLawyer(LawyerId);
 	}
 
 	@PostMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
-	public Securities createSecurity(final @RequestBody Securities security) {
-		security.setId(idCounter.incrementAndGet());
-		return securitiesService.createSecurities(security);
+	public Lawyer createLawyer(final @RequestBody Lawyer lawyer) {
+		lawyer.setId(idCounter.incrementAndGet());
+		return LawyerService.createLawyer(lawyer);
 	}
 
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<Securities> deleteSecurity(@PathVariable("id") Integer securitytId) {
-		if (securitiesService.checkIfSecurityExist(securitytId)) {
-			securitiesService.deleteSecurity(securitytId);
+	public ResponseEntity<Lawyer> deleteLawyer(@PathVariable("id") Integer LawyerId) {
+		if (LawyerService.checkIfLawyerExist(LawyerId)) {
+			LawyerService.deleteLawyer(LawyerId);
 			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.notFound().build();
 	}
 
 	@PutMapping(path = "/{id}")
-	public ResponseEntity<Object> updateSecurity(final @PathVariable("id") Integer securityId,
-			final @RequestBody Securities security) {
-		security.setId(securityId);
-		Securities result = null;
-		if (securitiesService.checkIfSecurityExist(securityId)) {
-			result = securitiesService.updateSecurity(securityId, security);
+	public ResponseEntity<Object> updateLawyer(final @PathVariable("id") Integer LawyerId,
+			final @RequestBody Lawyer lawyer) {
+		lawyer.setId(LawyerId);
+		Lawyer result = null;
+		if (LawyerService.checkIfLawyerExist(LawyerId)) {
+			result = LawyerService.updateLawyer(LawyerId, lawyer);
 		}
 		ResponseEntity<Object> status = result == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
 				: new ResponseEntity<>(result, HttpStatus.OK);
-		securitiesService.updateSecurity(securityId, security);
+		LawyerService.updateLawyer(LawyerId, lawyer);
 
 		return status;
 	}
